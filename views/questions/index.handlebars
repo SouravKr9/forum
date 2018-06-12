@@ -1,0 +1,15 @@
+{{#each ideas}}
+  <div class="card card-body">
+    <h4>{{title}}</h4>
+    <p>{{details}}</p>
+    <a href="/questions/edit/{{id}}" class="btn btn-dark btn-md mb-2">   <!--Try glyphicons for buttons-->
+      <span class="glyphicon glyphicon-pencil"></span> Edit
+    </a>
+    <form action="/questions/{{id}}?_method=DELETE" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" class="btn btn-danger btn-block" value="Delete">
+    </form>
+  </div>
+{{else}}
+  <p>No Questions Asked</p>
+{{/each}}
