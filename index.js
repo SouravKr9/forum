@@ -36,7 +36,7 @@ require('./config/passport')(passport);
 app.engine('handlebars', exphbs({
   defaultLayout: 'main'
 }));
-app.set('views',path.join(__dirname,'views'));
+app.set('views',path.join(__dirname,'./views'));
 app.set('view engine', 'handlebars');
 
 //body-parser Middleware

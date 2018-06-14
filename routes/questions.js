@@ -5,8 +5,9 @@ var app = require('../index');
 var Question = require('../models/Questions');
 router.get('/', ensureAuthenticated, (request, response)=>{
 
-    Question.find({user: request.user.id}).sort({date: 'desc'})
+    Question.find({}).sort({date: 'desc'})
         .then(questions => {
+            //console.log(questions);
             response.render('questions/index', {
                 questions: questions
             });
@@ -37,7 +38,8 @@ router.post('/', ensureAuthenticated, (request, response)=>{
       user: request.user.id
     };
     new Question(newUser).save()
-    .then(idea => {
+    .then(question => {
+      //console.log(question.user);
       request.flash('success_msg', 'Question added');
       response.redirect('/questions');
     });
@@ -46,23 +48,24 @@ router.post('/', ensureAuthenticated, (request, response)=>{
 router.get('/add', ensureAuthenticated, (request, response)=>{
     response.render('./questions/add');
 });
+
 router.get('/edit/:id', ensureAuthenticated, (request,response)=>{
   Question.findOne({
     _id: request.params.id
   })
   .then(question => {
-    if(question.user != request.user.id){
-      request.flash('error_msg', 'Unauthorized Access');
-      response.redirect('/questions');
-    }
-    else{
+    //if(question.user != request.user.id){
+      // request.flash('error_msg', 'Unauthorized Access');
+      // response.redirect('/questions');
+    // }
+    // else{
       response.render('questions/edit', {
         question: question
       });
-    }
+    //}
   });
 });
-router.put('/questions/:id', ensureAuthenticated, (request, response)=> {
+router.put('/:id', ensureAuthenticated, (request, response)=> {
   Question.findOne({
     _id: request.params.id
   })
@@ -76,7 +79,7 @@ router.put('/questions/:id', ensureAuthenticated, (request, response)=> {
     });
   });
 });
-router.delete('/questions/:id', ensureAuthenticated, (request, response)=> {
+router.delete('/:id', ensureAuthenticated, (request, response)=> {
     Question.remove({_id: request.params.id})
         .then(() => {
             request.flash('success_msg', 'Question removed');
@@ -89,7 +92,7 @@ function ensureAuthenticated(request, response, next){
     }
     else{
         request.flash('error_msg', 'Unauthorized Access');
-        response.redirect('/login');
+        response.redirect('/users/login');
     }
 }
 
