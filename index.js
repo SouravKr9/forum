@@ -71,113 +71,18 @@ app.use(function(request, response, next){
   response.locals.user = request.user || null;
   next();
 });
-
-//Preventing url re-writing
-// function ensureAuthenticated(request, response, next){
-//   if(request.isAuthenticated()){
-//     return next();
-//   }
-//   else{
-//     request.flash('error_msg', 'Unauthorized Access');
-//     response.redirect('/users/login');
-//   }
-// }
-
-//Index Route
 app.get('/',(request, response)=>{
   const msg = 'Hi';
   response.render('index', {
     title: msg
   });
 });
-
 //About Route
 app.get('/about',(request, response)=>{
   response.render('about');
 });
-
-//Question Input Form
-// app.get('/questions/add', ensureAuthenticated, (request, response)=>{
-//   response.render('questions/add');
-// });
-
-//Edit Question
-// app.get('/questions/edit/:id', ensureAuthenticated, (request,response)=>{
-//   Question.findOne({
-//     _id: request.params.id
-//   })
-//   .then(question => {
-//     if(question.user != request.user.id){
-//       request.flash('error_msg', 'Unauthorized Access');
-//       response.redirect('/questions');
-//     }
-//     else{
-//       response.render('questions/edit', {
-//         question: question
-//       });
-//     }
-//   });
-// });
-//Questions route
-
-
 //Process form
 app.use('/questions',questionsRotuer);
-/////////////////////////////////////////
-// app.post('/questions', ensureAuthenticated, (request, response)=>{
-//   let errors = [];
-//
-//   if(!request.body.title){
-//     errors.push({text: 'Please enter a title'});
-//   }
-//   if(!request.body.details){
-//     errors.push({text: 'Please enter details'});
-//   }
-//
-//   if(errors.length>0){
-//     response.render('questions/add', {
-//       errors: errors,
-//       title: request.body.title,
-//       details: request.body.details
-//     });
-//   }
-//   else{
-//     const newUser = {
-//       title: request.body.title,
-//       details: request.body.details,
-//       user: request.user.id
-//     };
-//     new Question(newUser).save()
-//     .then(idea => {
-//       request.flash('success_msg', 'Question added');
-//       response.redirect('/questions');
-//     });
-//   }
-// });
-//Editing Questions
-// app.put('/questions/:id', ensureAuthenticated, (request, response)=> {
-//   Question.findOne({
-//     _id: request.params.id
-//   })
-//   .then(question => {
-//     question.title = request.body.title;
-//     question.details = request.body.details;
-//
-//     question.save().then(question => {
-//       request.flash('success_msg', 'Question updated');
-//       response.redirect('/questions');
-//     });
-//   });
-// });
-//Delete Questions
-// app.delete('/questions/:id', ensureAuthenticated, (request, response)=> {
-//   Question.remove({_id: request.params.id})
-//     .then(() => {
-//       request.flash('success_msg', 'Question removed');
-//       response.redirect('/questions');
-//     });
-// });
-//Login Route
 app.use('/users/login',loginRouter);
 //Register Route
 app.use('/users/register',registerRouter);
