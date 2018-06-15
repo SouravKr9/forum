@@ -1,7 +1,7 @@
 var express = require('express');
 var app = require('../index');
 var router = express.Router();
-var User = require('../models/User');
+var UserData = require('../models/UserData');
 const flash = require('connect-flash');
 const bcrypt = require('bcryptjs');
 router.get('/',function (req,res,next) {
@@ -21,41 +21,59 @@ router.post('/', (request, response) => {
         response.render('./users/register', {
             errors: errors,
             name: request.body.name,
+            reg: request.body.reg,
+            type: request.body.type,
             email: request.body.email,
             password: request.body.password,
             cnfpassword: request.body.cnfpassword
         });
     }
     else{
-        User.findOne({email: request.body.email})
+        UserData.findOne({email: request.body.email})
             .then(user => {
                 if(user){
                     request.flash('error_msg', 'Email already registered');
                     response.redirect('login');
                 }
                 else{
-                    const newUser = new User({
-                        name: request.body.name,
-                        email: request.body.email,
-                        password: request.body.password
-                    });
-                    console.log("I am here!!");
-                    bcrypt.genSalt(10, (err, salt)=> {
-                        bcrypt.hash(newUser.password, salt, (err, hash)=> {
-                            if(err) throw err;
+                     UserData.findOne({reg:request.body.reg})
+                       .then(user => {
+                           if(user)
+                           {
+                               request.flash('error_msg', 'Registration ID already registered');
+                               response.redirect('login');
+                           }else
+                           {
+                                   const newUser = new UserData({
+                                   name: request.body.name,
+                                   reg: request.body.reg,
+                                   type: request.body.type,
+                                   email: request.body.email,
+                                   password: request.body.password
 
-                            newUser.password = hash;
-                            newUser.save()
-                                .then(user => {
-                                    request.flash('success_msg', 'You are now registered and can log in');
-                                    response.redirect('login');
-                                })
-                                .catch(err => {
-                                    console.log(err);
-                                    return;
-                                });
-                        });
-                    });
+                           });
+                                   console.log("I am here!!");
+                               bcrypt.genSalt(10, (err, salt)=> {
+                                   bcrypt.hash(newUser.password, salt, (err, hash)=> {
+                                       if(err) throw err;
+
+                                       newUser.password = hash;
+                                       newUser.save()
+                                           .then(user => {
+                                               request.flash('success_msg', 'You are now registered and can log in');
+                                               response.redirect('login');
+                                           })
+                                           .catch(err => {
+                                               console.log(err);
+                                               return;
+                                           });
+                                   });
+                               });
+                           }
+                       });
+
+
+
                 }
             });
     }
