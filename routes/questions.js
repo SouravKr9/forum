@@ -5,9 +5,9 @@ var app = require('../index');
 var Question = require('../models/Questions');
 router.get('/', ensureAuthenticated, (request, response)=>{
 
-    Question.find({}).sort({date: 'desc'})
+    Question.find({barnch: request.user.branch}).sort({date: 'desc'})
         .then(questions => {
-            //console.log(questions);
+            //console.log();
             response.render('questions/index', {
                 questions: questions
             });
@@ -35,7 +35,9 @@ router.post('/', ensureAuthenticated, (request, response)=>{
     const newUser = {
       title: request.body.title,
       details: request.body.details,
-      user: request.user.id
+      user: request.user.id,
+      branch: request.body.branch,
+      topic: request.body.topic
     };
     new Question(newUser).save()
     .then(question => {

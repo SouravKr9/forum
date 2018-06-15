@@ -14,6 +14,14 @@ const QuestionSchema = new Schema({
   date: {
     type: Date,
     default: Date.now()
+  },
+  branch: {
+    type: String,
+    required: true
+  },
+  topics: {
+    type: String,
+    required: true
   }
 });
 

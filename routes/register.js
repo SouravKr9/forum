@@ -49,8 +49,9 @@ router.post('/', (request, response) => {
                                    reg: request.body.reg,
                                    type: request.body.type,
                                    email: request.body.email,
-                                   password: request.body.password
-
+                                   password: request.body.password,
+                                   branch: request.body.branch,
+                                   topics: request.body.topics
                            });
                                    console.log("I am here!!");
                                bcrypt.genSalt(10, (err, salt)=> {
