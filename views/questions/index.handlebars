@@ -1,16 +1,25 @@
+{{!-- <script src=".../helpers/hasAsked.js"></script> --}}
 {{#each questions}}
   <div class="card card-body">
     <h4>{{title}}</h4>
     <p>{{details}}</p>
-    <p>{{branch}}</p>
-    <p>{{details}}</p>
-    <a href="/questions/edit/{{id}}" class="btn btn-dark btn-md mb-2">   <!--Try glyphicons for buttons-->
-      <span class="glyphicon glyphicon-pencil"></span> Edit
-    </a>
-    <form action="/questions/{{id}}?_method=DELETE" method="post">
-      <input type="hidden" name="_method" value="DELETE">
-      <input type="submit" class="btn btn-danger btn-block" value="Delete">
-    </form>
+    <!-- <p>{{id}}</p>
+    <p>{{date}}</p> -->
+    <p>{{barnch}}</p>
+    <p>{{topics}}</p>
+    {{!-- {{#if (hasAsked user)}} --}}
+      <a href="/questions/edit/{{id}}" class="btn btn-dark btn-md mb-2">   <!--Try glyphicons for buttons-->
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </a>
+      <form action="/questions/{{id}}?_method=DELETE" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" class="btn btn-danger btn-block" value="Delete">
+      </form>
+    {{!-- {{else}} --}}
+      {{!-- <div></div>
+    {{/if}} --}}
+    <p>Asked by: </p>
+    <p>{{user}}</p>
   </div>
 {{else}}
   <p>No Questions Asked</p>

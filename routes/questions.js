@@ -7,7 +7,8 @@ router.get('/', ensureAuthenticated, (request, response)=>{
 
     Question.find({barnch: request.user.branch}).sort({date: 'desc'})
         .then(questions => {
-            //console.log();
+            console.log(questions);
+            //console.log(questions[1].barnch);
             response.render('questions/index', {
                 questions: questions
             });
@@ -35,8 +36,8 @@ router.post('/', ensureAuthenticated, (request, response)=>{
     const newUser = {
       title: request.body.title,
       details: request.body.details,
-      user: request.user.id,
-      branch: request.body.branch,
+      user: request.user.reg,
+      barnch: request.body.branch,
       topic: request.body.topic
     };
     new Question(newUser).save()
