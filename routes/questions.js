@@ -3,11 +3,13 @@ var router = express.Router();
 var flash = require('connect-flash');
 var app = require('../index');
 var Question = require('../models/Questions');
+var Answer = require('../models/Answers');
+
 router.get('/', ensureAuthenticated, (request, response)=>{
 
     Question.find({barnch: request.user.branch}).sort({date: 'desc'})
         .then(questions => {
-            console.log(questions);
+            //console.log(questions);
             //console.log(questions[1].barnch);
             response.render('questions/index', {
                 questions: questions
@@ -89,6 +91,45 @@ router.delete('/:id', ensureAuthenticated, (request, response)=> {
             response.redirect('/questions');
         });
 });
+
+router.get('/answer/:id', ensureAuthenticated, (request, response)=> {
+  Question.findOne({
+    _id: request.params.id
+  }).then(question => {
+    response.render('./questions/answer', {
+      question: question
+    });
+  });
+});
+
+router.post('/answers/:id', ensureAuthenticated, (request, response) => {
+  let errors = [];
+
+  if(!request.body.answer){
+    errors.push({text: 'Please enter your answer'});
+  }
+
+  if(errors.length>0){
+    response.render('questions/answer', {
+      errors: errors,
+      details: request.body.details
+    });
+  }
+  else{
+    const newAns = {
+      qid: request.params.id,
+      ans: request.body.answer,
+      user: request.user.reg
+    };
+
+    new Answer(newAns).save()
+      .then(answer => {
+        request.flash('success_msg', 'Answer added');
+        response.redirect('/questions');
+      });
+  }
+});
+
 function ensureAuthenticated(request, response, next){
     if(request.isAuthenticated()){
         return next();
