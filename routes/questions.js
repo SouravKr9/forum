@@ -35,12 +35,13 @@ router.post('/', ensureAuthenticated, (request, response)=>{
     });
   }
   else{
+      console.log("comming here to questionns add");
     const newUser = {
       title: request.body.title,
       details: request.body.details,
       user: request.user.reg,
-      barnch: request.body.branch,
-      topic: request.body.topic
+      branch: request.body.branch,
+      topics: request.body.topics
     };
     new Question(newUser).save()
     .then(question => {
