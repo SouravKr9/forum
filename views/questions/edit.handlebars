@@ -15,6 +15,20 @@
       <label for="details">Details</label>
       <textarea name="details" class="form-control" required>{{question.details}}</textarea>
     </div>
+    <div class="form-group">
+      <label for="branch">Branch</label>
+      <select name="branch" value="{{question.branch}}">
+          <option value="CSE">CSE</option>
+          <option value="MECH">MECH</option>
+          <option value="ETC">ETC</option>
+      </select>
+
+      </div>
+      <div class="form-control">
+
+        <label for="topics">Topics</label>
+        <input type="text" name="topics" value="{{question.topics}}" data-role="tagsinput" />
+      </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

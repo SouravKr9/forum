@@ -22,6 +22,11 @@ mongoose.connect('mongodb://localhost/forum-dev', {
 .then(()=>console.log('MongoDB Connected'))
 .catch(err=>console.log(err));
 
+//Handlebars Helpers
+const {
+  hasAsked
+} = require('./helpers/hbs');
+
 //Load Model
 require('./models/Questions');
 const Question = mongoose.model('questions');
@@ -37,6 +42,9 @@ require('./config/passport')(passport);
 
 //Handlebars Middleware
 app.engine('handlebars', exphbs({
+  helpers: {
+    hasAsked: hasAsked
+  },
   defaultLayout: 'main'
 }));
 app.set('views',path.join(__dirname,'./views'));

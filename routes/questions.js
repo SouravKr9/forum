@@ -7,10 +7,10 @@ var Answer = require('../models/Answers');
 
 router.get('/', ensureAuthenticated, (request, response)=>{
 
-    Question.find({barnch: request.user.branch}).sort({date: 'desc'})
+    Question.find({branch: request.user.branch}).sort({date: 'desc'})
         .then(questions => {
-            //console.log(questions);
-            //console.log(questions[1].barnch);
+            //console.log(request.user.reg);
+            //console.log(questions[1].branch);
             response.render('questions/index', {
                 questions: questions
             });
@@ -39,13 +39,13 @@ router.post('/', ensureAuthenticated, (request, response)=>{
     const newUser = {
       title: request.body.title,
       details: request.body.details,
-      user: request.user.reg,
+      asked: request.user.reg,
       branch: request.body.branch,
       topics: request.body.topics
     };
     new Question(newUser).save()
     .then(question => {
-      //console.log(question.user);
+      //console.log(question);
       request.flash('success_msg', 'Question added');
       response.redirect('/questions');
     });
@@ -60,15 +60,15 @@ router.get('/edit/:id', ensureAuthenticated, (request,response)=>{
     _id: request.params.id
   })
   .then(question => {
-    //if(question.user != request.user.id){
-      // request.flash('error_msg', 'Unauthorized Access');
-      // response.redirect('/questions');
-    // }
-    // else{
+    if(question.asked != request.user.reg){
+      //request.flash('error_msg', 'Unauthorized Access');
+      response.redirect('/questions');
+    }
+    else{
       response.render('questions/edit', {
         question: question
       });
-    //}
+    }
   });
 });
 router.put('/:id', ensureAuthenticated, (request, response)=> {
