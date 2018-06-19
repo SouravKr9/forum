@@ -11,6 +11,10 @@ const QuestionSchema = new Schema({
     type: String,
     required: true
   },
+  asked: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now()
