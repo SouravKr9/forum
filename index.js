@@ -24,7 +24,8 @@ mongoose.connect('mongodb://localhost/forum-dev', {
 
 //Handlebars Helpers
 const {
-  hasAsked
+  hasAsked,
+  display
 } = require('./helpers/hbs');
 
 //Load Model
@@ -43,7 +44,8 @@ require('./config/passport')(passport);
 //Handlebars Middleware
 app.engine('handlebars', exphbs({
   helpers: {
-    hasAsked: hasAsked
+    hasAsked: hasAsked,
+    display: display
   },
   defaultLayout: 'main'
 }));

@@ -1,3 +1,5 @@
+//var express = require('express');
+
 module.exports = {
   hasAsked: function(re, questionUser){
     // console.log(re);
@@ -6,5 +8,5 @@ module.exports = {
       return true;
     else
       return false;
-  } 
+  }
 }

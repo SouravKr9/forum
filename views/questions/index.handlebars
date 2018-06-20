@@ -1,11 +1,11 @@
 {{!-- <script src=".../helpers/hasAsked.js"></script> --}}
 {{#each questions}}
-  <div class="card card-body">
+  <div class="card card-body answer-route" >
     <h4>{{title}}</h4>
     <p>{{details}}</p>
     <!-- <p>{{id}}</p>
     <p>{{date}}</p> -->
-    <!-- <p>{{barnch}}</p> -->
+    <!-- <p>{{branch}}</p> -->
     <p>{{topics}}</p>
     {{#if (hasAsked ../user.reg asked)}}
       <a href="/questions/edit/{{id}}" class="btn btn-dark btn-md mb-2">   <!--Try glyphicons for buttons-->
@@ -21,6 +21,7 @@
     {{/if}}
     <p>Asked by: </p>
     <p>{{asked}}</p>
+    <a href="/questions/answer_index/{{id}}" class="btn btn-link">See Answers</a>
   </div>
 {{else}}
   <p>No Questions Asked</p>

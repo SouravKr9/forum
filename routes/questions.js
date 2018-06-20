@@ -131,6 +131,18 @@ router.post('/answers/:id', ensureAuthenticated, (request, response) => {
   }
 });
 
+router.get('/answer_index/:id', (request, response) => {
+  Answer.find({qid: request.params.id}).sort({date: 'desc'})
+    .then(answers => {
+      //console.log(request.user.reg);
+      //console.log(questions[1].branch);
+      //response.send('Answer list');
+      response.render('questions/answer_index', {
+          answers: answers
+      });
+    });
+})
+
 function ensureAuthenticated(request, response, next){
     if(request.isAuthenticated()){
         return next();
