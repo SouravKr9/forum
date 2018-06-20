@@ -15,13 +15,15 @@
               <option value="CSE">CSE</option>
               <option value="MECH">MECH</option>
               <option value="ETC">ETC</option>
+              <option value="CIVIL">CIVIL</option>
+              <option value="AE">AE</option>
           </select>
 
       </div>
       <div class="form-control">
 
           <label for="topics">Topics</label>
-          <input type="text" name="topics" value="{{topics}}" data-role="tagsinput" />
+          <input type="text" name="topics" value="{{topics}}" data-role="tagsinput" class="typeahead tt-query"/>
       </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

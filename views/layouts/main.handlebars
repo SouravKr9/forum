@@ -27,6 +27,33 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha256-tQ3x4V2JW+L0ew/P3v2xzL46XDjEWUExFkCDY0Rflqc="
           crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js" integrity="sha256-LOnFraxKlOhESwdU/dX+K0GArwymUDups0czPWLEg4E="
+          crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/js/typeahead.bundle.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function(){
+          // Defining the local dataset
+          var cars = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
+
+          // Constructing the suggestion engine
+          var cars = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.whitespace,
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              local: cars
+          });
+
+          // Initializing the typeahead
+          $('.typeahead').typeahead({
+                      hint: true,
+                      highlight: true, /* Enable substring highlighting */
+                      minLength: 1 /* Specify minimum characters required for showing result */
+                  },
+                  {
+                      name: 'cars',
+                      source: cars
+                  });
+      });
+  </script>
 
 </body>
 
