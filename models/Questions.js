@@ -11,10 +11,22 @@ const QuestionSchema = new Schema({
     type: String,
     required: true
   },
+  asked: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now()
+  },
+  branch: {
+    type: String,
+    required: true
+  },
+  topics: {
+    type: String,
+    required: true
   }
 });
 
-mongoose.model('questions', QuestionSchema);
+var Question =  module.exports = mongoose.model('questions',QuestionSchema);

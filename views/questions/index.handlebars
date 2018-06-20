@@ -1,14 +1,27 @@
-{{#each ideas}}
-  <div class="card card-body">
+{{!-- <script src=".../helpers/hasAsked.js"></script> --}}
+{{#each questions}}
+  <div class="card card-body answer-route" >
     <h4>{{title}}</h4>
     <p>{{details}}</p>
-    <a href="/questions/edit/{{id}}" class="btn btn-dark btn-md mb-2">   <!--Try glyphicons for buttons-->
-      <span class="glyphicon glyphicon-pencil"></span> Edit
-    </a>
-    <form action="/questions/{{id}}?_method=DELETE" method="post">
-      <input type="hidden" name="_method" value="DELETE">
-      <input type="submit" class="btn btn-danger btn-block" value="Delete">
-    </form>
+    <!-- <p>{{id}}</p>
+    <p>{{date}}</p> -->
+    <!-- <p>{{branch}}</p> -->
+    <p>{{topics}}</p>
+    {{#if (hasAsked ../user.reg asked)}}
+      <a href="/questions/edit/{{id}}" class="btn btn-dark btn-md mb-2">   <!--Try glyphicons for buttons-->
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </a>
+      <a href="/questions/answer/{{id}}" class="btn btn-info btn-md mb-2">Answer</a>
+      <form action="/questions/{{id}}?_method=DELETE" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" class="btn btn-danger btn-block" value="Delete">
+      </form>
+    {{else}}
+      <a href="/questions/answer/{{id}}" class="btn btn-info btn-md mb-2">Answer</a>
+    {{/if}}
+    <p>Asked by: </p>
+    <p>{{asked}}</p>
+    <a href="/questions/answer_index/{{id}}" class="btn btn-link">See Answers</a>
   </div>
 {{else}}
   <p>No Questions Asked</p>

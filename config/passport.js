@@ -3,14 +3,14 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 //Load User Model
-const User = mongoose.model('users');
+const UserData = mongoose.model('user_data');
 
 //This is where authentication happens
 module.exports = function(passport) {
-  passport.use(new localStrategy({usernameField: 'email'}, (email, password, done) =>{
+  passport.use(new localStrategy({usernameField: 'reg'}, (reg, password, done) =>{
     //Compare email
-    User.findOne({
-      email: email,
+    UserData.findOne({
+      reg: reg,
     }).then(user => {
       if(!user){
         return done(null, false, {message: 'No User Found'});
@@ -33,7 +33,7 @@ module.exports = function(passport) {
     });
 
   passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+    UserData.findById(id, function(err, user) {
       done(err, user);
     });
   });
